@@ -1,0 +1,43 @@
+{
+  "name": "loopback-connector-oracle",
+  "version": "0.9.0",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "posttest": "npm run lint"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "dependencies": {
+    "async": "^2.1.5",
+    "debug": "^2.1.1",
+    "loopback-connector": "^4.0.0",
+    "loopback-oracle-installer": "~3.0.0",
+    "strong-globalize": "^2.6.2"
+  },
+  "description": "The oracle connector for the  oe-cloud framework.",
+  "devDependencies": {
+    "bluebird": "^3.3.3",
+    "eslint": "^3.17.0",
+    "eslint-config-loopback": "^8.0.0",
+    "loopback-datasource-juggler": "^3.0.0",
+    "mocha": "^3.2.0",
+    "rc": "^1.0.0",
+    "should": "^8.0.2"
+  },
+  "optionalDependencies": {},
+  "directories": {},
+  "keywords": [
+    "StrongLoop",
+    "LoopBack",
+    "Oracle",
+    "DataSource",
+    "Connector"
+  ],
+  "license": "SEE LICENSE IN LICENSE.md",
+  "repository": {
+    "type": "git",
+    "url": "git+http://evgit/oecloud.io/loopback-connector-oracle.git"
+  }
+}

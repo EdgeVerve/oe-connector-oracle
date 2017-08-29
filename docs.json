@@ -1,0 +1,15 @@
+{
+  "content": [
+    {
+      "title": "LoopBack Oracle Connector",
+      "depth": 2
+    },
+    "lib/oracle.js",
+    {
+      "title": "Discovery API",
+      "depth": 2
+    },
+    "lib/discovery.js"
+  ],
+  "codeSectionDepth": 3
+}
