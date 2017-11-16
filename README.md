@@ -1,6 +1,8 @@
-# loopback-connector-oracle
+# oe-connector-oracle
 
-[Oracle](https://www.oracle.com/database/index.html) is an object-relational database management system produced by Oracle Corporation. The `loopback-connector-oracle` module is the Oracle connector for the LoopBack framework based on the [node-oracledb](https://github.com/oracle/node-oracledb) module.
+This is a oracle connector for oeCloud framework developed based on loopback-connector-postgresql with the same license of postgres connector.
+
+[Oracle](https://www.oracle.com/database/index.html) is an object-relational database management system produced by Oracle Corporation. The `oe-connector-oracle` module is the Oracle connector for the oeCloud framework based on the [node-oracledb](https://github.com/oracle/node-oracledb) module.
 
 <div class="gh-only">
 For more information, see the <a href="http://loopback.io/doc/en/lb3/Oracle-connector.html)">LoopBack documentation</a>.
@@ -19,7 +21,7 @@ For more information, see the <a href="http://loopback.io/doc/en/lb3/Oracle-conn
 In your application root directory, enter this command to install the connector:
 
 ```shell
-$ npm install loopback-connector-oracle --save
+$ npm install oe-connector-oracle --save
 ```
 
 If you create a Oracle data source using the data source generator as described below, you don’t have to do this, since the generator will run npm install for you.

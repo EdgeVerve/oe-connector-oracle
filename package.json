@@ -1,10 +1,9 @@
 {
-  "name": "loopback-connector-oracle",
+  "name": "oe-connector-oracle",
   "version": "1.1.0",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint .",
-    "posttest": "npm run lint"
+    "lint": "eslint ."
   },
   "engines": {
     "node": ">=4.0.0"
@@ -29,8 +28,6 @@
   "optionalDependencies": {},
   "directories": {},
   "keywords": [
-    "StrongLoop",
-    "LoopBack",
     "Oracle",
     "DataSource",
     "Connector"
