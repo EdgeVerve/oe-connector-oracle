@@ -1,5 +1,7 @@
 # oe-connector-oracle
 
+This is a oracle connector for oeCloud framework developed based on loopback-connector-postgresql with the same license of postgres connector.
+
 [Oracle](https://www.oracle.com/database/index.html) is an object-relational database management system produced by Oracle Corporation. The `oe-connector-oracle` module is the Oracle connector for the oeCloud framework based on the [node-oracledb](https://github.com/oracle/node-oracledb) module.
 
 <div class="gh-only">
