@@ -8,3 +8,8 @@
 =========================
 
  * First release!
+
+17-11-2017, Version 1.1.0
+=========================
+
+ * Official Release to github & npm
