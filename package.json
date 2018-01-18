@@ -9,10 +9,9 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
-    "async": "^2.1.5",
+    "async": "2.4.1",
     "debug": "^2.1.1",
     "loopback-connector": "^4.0.0",
-    "loopback-oracle-installer": "~3.0.0",
     "strong-globalize": "^2.6.2"
   },
   "description": "The oracle connector for the  oe-cloud framework.",
