@@ -1,6 +1,6 @@
 {
   "name": "oe-connector-oracle",
-  "version": "1.7.0",
+  "version": "2.0.0",
   "main": "index.js",
   "scripts": {
     "lint": "eslint ."
@@ -9,19 +9,16 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
-    "async": "2.4.1",
-    "debug": "^2.1.1",
-    "loopback-connector": "^4.0.0",
-    "strong-globalize": "^2.6.2"
+    "async": "2.6.1",
+    "debug": "4.1.1",
+    "loopback-connector": "2.7.1",
+    "strong-globalize": "2.10.0"
   },
   "description": "The oracle connector for the  oe-cloud framework.",
   "devDependencies": {
-    "bluebird": "^3.3.3",
-    "eslint": "^3.17.0",
-    "eslint-config-loopback": "^8.0.0",
-    "mocha": "^3.2.0",
-    "rc": "^1.0.0",
-    "should": "^8.0.2"
+    "bluebird": "3.5.3",
+    "eslint": "4.10.0",
+    "mocha": "5.2.0"
   },
   "optionalDependencies": {},
   "directories": {},
