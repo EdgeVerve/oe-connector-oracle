@@ -1,6 +1,6 @@
 {
   "name": "oe-connector-oracle",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "index.js",
   "scripts": {
     "lint": "eslint ."
@@ -10,8 +10,7 @@
   },
   "dependencies": {
     "async": "2.6.1",
-    "debug": "4.1.1",
-    "uuid": "3.3.2"
+    "debug": "4.1.1"
   },
   "description": "The oracle connector for the  oe-cloud framework.",
   "devDependencies": {
