@@ -10,9 +10,7 @@
   },
   "dependencies": {
     "async": "2.6.1",
-    "debug": "4.1.1",
-    "loopback-connector": "2.7.1",
-    "strong-globalize": "2.10.0"
+    "debug": "4.1.1"
   },
   "description": "The oracle connector for the  oe-cloud framework.",
   "devDependencies": {
