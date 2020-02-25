@@ -21,22 +21,22 @@ describe('Auto-create schema with sequence support', function() {
     });
 
     // complex sequence
-    db.define('TestSchema3', {
-      reservationId : {
-        type: 'string',
-        postgresql: {
-          sequence: {
-            type: 'complex',
-            prefix: 'LMB',
-            name: 'reservation_sequence',
-            length: 10,
-          }
-        },
-        id: true
-      },
-      firstName: 'string',
-      lastName: 'string'
-    });
+    // db.define('TestSchema3', {
+    //   reservationId : {
+    //     type: 'string',
+    //     postgresql: {
+    //       sequence: {
+    //         type: 'complex',
+    //         prefix: 'LMB',
+    //         name: 'reservation_sequence',
+    //         length: 10,
+    //       }
+    //     },
+    //     id: true
+    //   },
+    //   firstName: 'string',
+    //   lastName: 'string'
+    // });
 
 
     // var p = db.automigrate();
@@ -45,9 +45,8 @@ describe('Auto-create schema with sequence support', function() {
     // }).catch(function(error){
     //   return done(error)
     // });
-    db.automigrate(function(error){
-      console.log(error)
-      return done(error)
+    db.automigrate(function(error){      
+      done(error)
     });
   });  
 
@@ -55,23 +54,24 @@ describe('Auto-create schema with sequence support', function() {
 
     it('asserts that the reservationid is a column created and it has sequence suppport in testschema2', function(done){
       // let connector = db.connector;
-      let query = 'SELECT column_default FROM INFORMATION_SCHEMA.columns WHERE table_name = \'testschema2\' and column_name = \'reservationid\'';
+      // let query = 'SELECT column_default FROM INFORMATION_SCHEMA.columns WHERE table_name = \'testschema2\' and column_name = \'reservationid\'';
+      let query = 'SELECT data_default FROM USER_TAB_COLS WHERE table_name = \'TESTSCHEMA2\' and COLUMN_NAME = \'RESERVATIONID\'';
       
-      db.connector.executeSQL(query, null, {}, function(err, results) {
+      db.connector.executeSQL(query, [], {}, function(err, results) {
         if(err) {
           done(err)
         }
         else {
           results.length.should.equal(1);
-          results[0].column_default.includes('reservation_sequence').should.be.true();
+          results[0].DATA_DEFAULT.includes('RESERVATION_SEQUENCE').should.be.true();
           done();
         }
       });    
     });
 
     it('asserts that the sequence object is created in database', done => {
-      let query = 'select * from information_schema.sequences where sequence_name = \'reservation_sequence\'';
-      db.connector.executeSQL(query, null, {}, function(err, results) {
+      let query = 'select * from USER_sequences where sequence_name = \'RESERVATION_SEQUENCE\'';
+      db.connector.executeSQL(query, [], {}, function(err, results) {
         if(err) {
           done(err);
         }
@@ -79,8 +79,8 @@ describe('Auto-create schema with sequence support', function() {
           // console.dir(results);
           results.length.should.equal(1);
           // results[0].sequence_name.should.exist;
-          should.exist(results[0].sequence_name);
-          results[0].sequence_name.should.equal('reservation_sequence');
+          should.exist(results[0].SEQUENCE_NAME);
+          results[0].SEQUENCE_NAME.should.equal('RESERVATION_SEQUENCE');
           done();
         }
       });
@@ -98,12 +98,12 @@ describe('Auto-create schema with sequence support', function() {
           done(err);
         }
         else {
-          db.connector.executeSQL('select last_value from reservation_sequence', null, {}, function(err, result){
+          db.connector.executeSQL('select reservation_sequence.currval as last_value FROM dual', null, {}, function(err, result){
             if(err) {
               done(err);
             }
             else {
-              result[0].last_value.should.equal(2);
+              result[0].LAST_VALUE.should.equal(2);
               done();
             }
           });
@@ -112,7 +112,7 @@ describe('Auto-create schema with sequence support', function() {
     });
   });
 
-  describe('complex sequence', function(){
+  xdescribe('complex sequence', function(){
     it('should have created the table in the db', done => {
       let query = 'select count(*) from information_schema.tables where table_name = \'testschema3\'';
       db.connector.executeSQL(query, null, {}, function(err, result) {
@@ -159,10 +159,5 @@ describe('Auto-create schema with sequence support', function() {
         }
       });
     });
-
-  });
-
-  
-
-  
+  });  
 });
