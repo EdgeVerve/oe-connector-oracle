@@ -42,6 +42,20 @@ function fetchUserTables(cxn, cb) {
   });
 }
 
+function fetchSequenceObjects(cxn, cb) {
+  let fetchTablesQuery = 'SELECT sequence_name from USER_sequences';
+  cxn.execute(fetchTablesQuery, {}, function(err, results){
+    cb(err, results);
+  });
+}
+
+function dropSequence(cxn, seqName, cb) {
+  let deleteQuery = `DROP SEQUENCE ${seqName}`;
+  cxn.execute(deleteQuery, function(err) {
+    cb(err)
+  });
+}
+
 function connectOracle(settings, cb) {
   oracledb.getConnection(settings, function(err, cxn) {
     cb(err, cxn);
@@ -74,6 +88,25 @@ connectOracle(oracleConnectSettings, function onConnect(err, cxn) {
           if(err) {
             console.error(err);
             process.exit(1);
+          }
+          else {
+            fetchSequenceObjects(cxn, function(err, results) {
+              if(err) {
+                console.error('Seq fetch error:', err);
+                process.exit(1);
+              }
+              else {
+                async.eachSeries(results.rows, function asyncDropSeq(record, done){
+                  let [name] = record;
+                  dropSequence(cxn, name, done);
+                }, function dropSeqAsyncCallback(err) {
+                  if(err) {
+                    console.error('Seq delete error:', err);
+                    process.exit(1);
+                  }                  
+                });
+              }
+            });
           }
         });
       }
