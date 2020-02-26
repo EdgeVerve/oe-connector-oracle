@@ -5,26 +5,26 @@ describe('Auto-create schema with sequence support', function() {
     db = global.getDataSource();
     
     // simple sequence
-    // db.define('TestSchema2', {
-    //   reservationId: {
-    //     type: 'number',
-    //     oracle: {
-    //       sequence: {
-    //         type: 'simple',
-    //         name: 'reservation_sequence'
-    //       }
-    //     },
-    //     id: true
-    //   },
-    //   firstName: "string",
-    //   "lastName":"string"
-    // });
+    db.define('TestSchema2', {
+      reservationId: {
+        type: 'number',
+        oracle: {
+          sequence: {
+            type: 'simple',
+            name: 'reservation_sequence'
+          }
+        },
+        id: true
+      },
+      firstName: "string",
+      "lastName":"string"
+    });
 
     // complex sequence
     db.define('TestSchema3', {
       reservationId : {
         type: 'string',
-        postgresql: {
+        oracle: {
           sequence: {
             type: 'complex',
             prefix: 'LMB',
@@ -38,19 +38,12 @@ describe('Auto-create schema with sequence support', function() {
       lastName: 'string'
     });
 
-
-    // var p = db.automigrate();
-    // p.then(function(){
-    //   return done();
-    // }).catch(function(error){
-    //   return done(error)
-    // });
     db.automigrate(function(error){      
       done(error)
     });
   });  
 
-  xdescribe('simple sequence', function() {
+  describe('simple sequence', function() {
 
     it('asserts that the reservationid is a column created and it has sequence suppport in testschema2', function(done){
       // let connector = db.connector;
@@ -112,17 +105,17 @@ describe('Auto-create schema with sequence support', function() {
     });
   });
 
-  xdescribe('complex sequence', function(){
+  describe('complex sequence', function(){
     it('should have created the table in the db', done => {
-      let query = 'select count(*) from information_schema.tables where table_name = \'testschema3\'';
-      db.connector.executeSQL(query, null, {}, function(err, result) {
+      let query = 'select count(*) as has_table from user_tables where table_name = \'TESTSCHEMA3\'';
+      db.connector.executeSQL(query, [], {}, function(err, result) {
         if(err) {
           done(err);
         }
         else {
           // console.dir(result);
           result.length.should.equal(1);
-          result[0].count.should.equal(1);
+          result[0].HAS_TABLE.should.equal(1);
           done();
         }
       });
@@ -145,14 +138,14 @@ describe('Auto-create schema with sequence support', function() {
           done(err);
         }
         else {
-          results.length.should.equal(2);
-          let query = `select last_value from reservation_sequence;`;
-          db.connector.executeSQL(query, null, {}, (err, result) => {
+          results.length.should.equal(2,'Expected 2 successful inserts');
+          let query = 'select reservation_sequence.currval as last_value from DUAL'
+          db.connector.executeSQL(query, [], {}, (err, result) => {
             if(err) {
               done(err)
             }
             else {
-              result[0].last_value.should.equal(4);
+              result[0].LAST_VALUE.should.equal(3);
               done();
             }
           });
