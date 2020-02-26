@@ -5,38 +5,38 @@ describe('Auto-create schema with sequence support', function() {
     db = global.getDataSource();
     
     // simple sequence
-    db.define('TestSchema2', {
-      reservationId: {
-        type: 'number',
-        oracle: {
-          sequence: {
-            type: 'simple',
-            name: 'reservation_sequence'
-          }
-        },
-        id: true
-      },
-      firstName: "string",
-      "lastName":"string"
-    });
-
-    // complex sequence
-    // db.define('TestSchema3', {
-    //   reservationId : {
-    //     type: 'string',
-    //     postgresql: {
+    // db.define('TestSchema2', {
+    //   reservationId: {
+    //     type: 'number',
+    //     oracle: {
     //       sequence: {
-    //         type: 'complex',
-    //         prefix: 'LMB',
-    //         name: 'reservation_sequence',
-    //         length: 10,
+    //         type: 'simple',
+    //         name: 'reservation_sequence'
     //       }
     //     },
     //     id: true
     //   },
-    //   firstName: 'string',
-    //   lastName: 'string'
+    //   firstName: "string",
+    //   "lastName":"string"
     // });
+
+    // complex sequence
+    db.define('TestSchema3', {
+      reservationId : {
+        type: 'string',
+        postgresql: {
+          sequence: {
+            type: 'complex',
+            prefix: 'LMB',
+            name: 'reservation_sequence',
+            length: 10,
+          }
+        },
+        id: true
+      },
+      firstName: 'string',
+      lastName: 'string'
+    });
 
 
     // var p = db.automigrate();
@@ -50,7 +50,7 @@ describe('Auto-create schema with sequence support', function() {
     });
   });  
 
-  describe('simple sequence', function() {
+  xdescribe('simple sequence', function() {
 
     it('asserts that the reservationid is a column created and it has sequence suppport in testschema2', function(done){
       // let connector = db.connector;
@@ -98,7 +98,7 @@ describe('Auto-create schema with sequence support', function() {
           done(err);
         }
         else {
-          db.connector.executeSQL('select reservation_sequence.currval as last_value FROM dual', null, {}, function(err, result){
+          db.connector.executeSQL('select reservation_sequence.currval as last_value FROM dual', [], {}, function(err, result){
             if(err) {
               done(err);
             }
