@@ -56,3 +56,90 @@ This will install the module and add's it to application’s package.json file.
 ```
 
 * Any filter query on the properties which are not actually part of model definition properties will be ignored by default. This will give you unexpected results based on your query which will not be same as mongodb. For example, if your model has property ```foo``` and your filter query is ```bar:1```. Then mongo will return ```[]``` (Empty array). where as Oracle will return all the records because the bar:1 filter will be ignored because its not a defined property.
+
+## Sequence support
+
+As of version 2.1.0 of the connector, support for consuming sequence objects is provisioned. Unlike `oe-connector-postgresql` module, this connector has only two kinds of sequences - **simple** and **complex**.
+
+Only one property in a model can be defined to support an oracle sequence object. The property should be such that it uniquely identifies the instance. Hence it should be an `id ` field.
+
+### Simple Sequence
+
+Supports a simple sequence - it is similar to having the sequence object created in the database and a corresponding table consuming it through a column whose default value is appropriately set. For e.g. below code (i.e. model definition) creates a sequence with name `reservation_sequence` and a table named `testschema2`
+
+```json
+{
+  "name": "testschema2",
+  "properties": {
+    "reservationId" : {
+      "id" : true,
+      "oracle": {
+        "sequence" : {
+          "type": "simple",
+          "name": "reservation_sequence"
+        }
+      }
+    },
+    "firstName": "string",
+    "lastName": "string"
+  }
+}
+```
+
+> Note: Only one property in the model can consume a sequence, and, it also must uniquely identify an instance. (Therefore `"id" : true` is part of the corresponding property definition)
+
+Below strech of code describes the configuration required for defining a **simple** sequence.
+
+```js
+const SEQ_SIMPLE = {
+  name: null,       // sequence name - required
+  incrementBy: 1,
+  minValue: false,  // number or boolean
+  maxValue: false,  // number or boolean
+  startFrom: 1,     // number
+  cache: false,     // Specify (integer) how many values of the sequence the database preallocates and keeps in memory for faster access. 
+                    //    Must be >=2. The integer should have less than or equal to 28 digits.
+                    //    Alternatively specify boolean. 
+                    //      A boolean true means cache value adopts 2. 
+                    //      A boolean false means no caching (default)
+  cycle: false,     // restart once the seq reaches its upper bound.
+  order: false      // guarantee sequence numbers are generated in order of request. Default false
+};
+```
+
+> Note: Please refer oracle documentation for more details about each parameter.
+
+### Complex sequence
+
+This connector also supports prefix based sequences. A `prefix` is a string which is prefixed to a padded sequence number. This makes it possible to generate sequences such as `LMB00001`, `LMB00002`, `LMB00003`, etc.
+
+It has all the configuration of a simple sequence, and, the following parameters:
+
+```js
+const SEQ_COMPLEX = Object.assign({}, SEQ_SIMPLE, {
+  name: null,       // sequence name - required
+  length: 0,        // final length of prefix-ed sequence - required
+  prefix: null      // the prefix to appear before the padded sequence - required
+});
+```
+Example:
+```json
+{
+  "name": "testschema3",
+  "properties": {
+    "reservationId" : {
+      "id" : true,
+      "oracle": {
+        "sequence" : {
+          "type": "complex",
+          "name": "reservation_sequence",
+          "prefix": "LMB",
+          "length": 10
+        }
+      }
+    },
+    "firstName": "string",
+    "lastName": "string"
+  }
+}
+```
