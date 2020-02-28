@@ -92,14 +92,14 @@ describe('Auto-create schema with sequence support', function() {
         }
         else {
           results.length.should.equal(2);
-          console.log('fetch1:', results);
-          db.connector.executeSQL('select reservation_sequence.currval as last_value FROM dual', [], {}, function(err, res){
+          // console.log('fetch1:', results);
+          db.connector.executeSQL('select reservation_sequence.nextval as last_value FROM dual', [], {}, function(err, res){
             if(err) {
               done(err);
             }
             else {
-              console.log('fetch2:', res);
-              res[0].LAST_VALUE.should.equal(2);
+              // console.log('fetch2:', res);
+              res[0].LAST_VALUE.should.equal(3);
               done();
             }
           });
@@ -107,7 +107,6 @@ describe('Auto-create schema with sequence support', function() {
       });
     });
   });
-
   describe('complex sequence', function(){
     it('should have created the table in the db', done => {
       let query = 'select count(*) as has_table from user_tables where table_name = \'TESTSCHEMA3\'';
@@ -118,6 +117,7 @@ describe('Auto-create schema with sequence support', function() {
         else {
           // console.dir(result);
           result.length.should.equal(1);
+
           result[0].HAS_TABLE.should.equal(1);
           done();
         }
@@ -142,15 +142,15 @@ describe('Auto-create schema with sequence support', function() {
         }
         else {
           results.length.should.equal(2,'Expected 2 successful inserts');
-          console.log('fetch1:',results);
-          let query = 'select reservation_sequence.currval as last_value from DUAL'
+          // console.log('fetch1:',results);
+          let query = 'select reservation_sequence.nextval as last_value from DUAL'
           db.connector.executeSQL(query, [], {}, (err, res) => {
             if(err) {
               done(err)
             }
             else {
-              console.log('fetch2:',res);
-              res[0].LAST_VALUE.should.equal(4);
+              // console.log('fetch2:',res);
+              res[0].LAST_VALUE.should.equal(6);
               done();
             }
           });
