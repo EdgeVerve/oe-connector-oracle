@@ -86,17 +86,20 @@ describe('Auto-create schema with sequence support', function() {
         { firstName: 'Jane', lastName: 'Contoso' }
       ];
 
-      Model.create(data, function(err) {
+      Model.create(data, function(err, results) {
         if(err) {
           done(err);
         }
         else {
-          db.connector.executeSQL('select reservation_sequence.currval as last_value FROM dual', [], {}, function(err, result){
+          results.length.should.equal(2);
+          console.log('fetch1:', results);
+          db.connector.executeSQL('select reservation_sequence.currval as last_value FROM dual', [], {}, function(err, res){
             if(err) {
               done(err);
             }
             else {
-              result[0].LAST_VALUE.should.equal(2);
+              console.log('fetch2:', res);
+              res[0].LAST_VALUE.should.equal(2);
               done();
             }
           });
@@ -139,13 +142,15 @@ describe('Auto-create schema with sequence support', function() {
         }
         else {
           results.length.should.equal(2,'Expected 2 successful inserts');
+          console.log('fetch1:',results);
           let query = 'select reservation_sequence.currval as last_value from DUAL'
-          db.connector.executeSQL(query, [], {}, (err, result) => {
+          db.connector.executeSQL(query, [], {}, (err, res) => {
             if(err) {
               done(err)
             }
             else {
-              result[0].LAST_VALUE.should.equal(3);
+              console.log('fetch2:',res);
+              res[0].LAST_VALUE.should.equal(4);
               done();
             }
           });
