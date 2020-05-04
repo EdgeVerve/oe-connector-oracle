@@ -15,7 +15,7 @@
   "description": "The oracle connector for the  oe-cloud framework.",
   "devDependencies": {
     "bluebird": "3.5.3",
-    "eslint": "4.10.0",
+    "eslint": "6.8.0",
     "mocha": "5.2.0"
   },
   "optionalDependencies": {},
