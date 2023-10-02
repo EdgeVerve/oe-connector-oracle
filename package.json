@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "async": "2.6.1",
-    "debug": "4.1.1",
+    "debug": "4.3.1",
     "oracledb": "4.1.0"
   },
   "description": "The oracle connector for the  oe-cloud framework.",
